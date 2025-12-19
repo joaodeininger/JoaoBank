@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import streamlit as st
-#from data import df
+import plotly.express as px
+import plotly.graph_objects as go
 
 
 
@@ -11,10 +12,10 @@ st.set_page_config(
     layout = "wide"
 )
 
-df = pd.read_csv("entrada")
-st.dataframe(df)
+df = pd.read_csv("Churn_Modelling.csv")
 
-r = 1
+
+r = np.random.randint(0, 1000000000)
 st.title("JoaoBank")
 st.write("Você tem R$", r)
 
@@ -23,11 +24,15 @@ opcao = st.sidebar.radio(
     "Esolha um tópico: ",
     [
         "Início",
+        "Extrato",
         "Sua Conta",
         "Configurações",
         "Suporte"
     ]
 )
+
+with st.expander("Expandir/Colapsar"):
+    st.image("https://img.freepik.com/vetores-gratis/entre-em-contato-conosco-gradient-square-buttons_78370-3755.jpg")
 
 if opcao == "Início":
     brilho = st.slider("Ajuste o brilho", 0, 100, 100, step=5)
@@ -45,18 +50,29 @@ if opcao == "Início":
         st.write("TED")
         st.info("""
                 ### Operações:
-                - Transferência em conta
-                - Déposito
-                - Saque
-                - Agendar Transferência
-                - Débito Automático""")
+                - ↔️Transferência em conta
+                - 💸Déposito
+                - 🏦Saque
+                - 📅Agendar Transferência
+                - 💳Débito Automático""")
+    st.divider()
+    st.subheader("Calculadora de Taxas: ")
+    n1 = st.number_input("Primeiro número")
+    n2 = st.number_input("Segundo número")
+    op = st.selectbox([])
 
-    st.write("Como usar esse app: ")
-    st.code("""st.set_page_config
-    (
-    page_title = "Tutorial Streamlit",
-    layout = "wide"
-    )""", language="python")
+elif opcao == "Extrato":
+    st.dataframe(df)
+    st.divider()
+    # val_min = st.slider("Ajustar parâmetro de filtro ():", 0, 1000, 500)
+    # df_filtro = df[df["CreditScore"] >= val_min]
+    # st.dataframe(df_filtro)
+
+    fig = px.bar(df, 
+                 x="Surname", y=["CreditScore", "Age"],
+                 title="Crédito por nome",
+                 labels={"Sobrenome":"Pontuação de Crédito"})
+    st.plotly_chart(fig, use_container_width=True)
 
 elif opcao == "Sua Conta":
     st.header("Widgets básicos")
@@ -108,5 +124,4 @@ elif opcao == "Suporte":
         if dvd == "Meu pix não funciona":
             st.success("Que pena!")
             st.balloons()
-
     
