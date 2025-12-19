@@ -1,0 +1,5 @@
+Produto,Categoria,Popularidade,Ano
+Python,Linguagem,95,1991
+Pandas,Biblioteca,90,2008
+Streamlit,Framework,85,2019
+NumPy,Biblioteca,92,2005
