@@ -57,9 +57,22 @@ if opcao == "Início":
                 - 💳Débito Automático""")
     st.divider()
     st.subheader("Calculadora de Taxas: ")
-    n1 = st.number_input("Primeiro número")
-    n2 = st.number_input("Segundo número")
-    op = st.selectbox([])
+    col5, col6, col7 = st.columns(3)
+    with col5:
+        n1 = st.number_input("Primeiro número")
+    with col6:
+        op = st.selectbox("Operação", ["+", "-", "*", "/"], index=0)
+    with col7:
+        n2 = st.number_input("Segundo número")
+    
+    if op == "+":
+        st.write(n1 + n2)
+    elif op == "-":
+        st.write(n1 - n2)
+    elif op == "*":
+        st.write(n1 * n2)
+    elif op == "/":
+        st.write(n1 / n2)
 
 elif opcao == "Extrato":
     st.dataframe(df)
@@ -124,5 +137,3 @@ elif opcao == "Suporte":
         if dvd == "Meu pix não funciona":
             st.success("Que pena!")
             st.balloons()
-    
-
